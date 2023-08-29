@@ -1,0 +1,24 @@
+<div *ngIf="isLoggedIn" class="navbar bg-base-100">
+  <div class="flex-1">
+    <a class="btn btn-ghost normal-case text-xl">Vote system</a>
+  </div>
+  <div class="flex-none">
+    <div class="dropdown dropdown-end">
+      <label tabindex="0" class="btn btn-ghost btn-circle avatar">
+        <div class="avatar placeholder">
+          <div class="bg-slate-100 dark:bg-neutral-focus text-neutral-content rounded-full w-10">
+            <span class="uppercase text-primary-focus dark:text-white text-md">{{this.transformName(profile?.firstName)}}{{this.transformName(profile?.lastName)}}</span>
+          </div>
+        </div> 
+      </label>
+      <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+        <li class="disabled">
+          <a class="justify-between">
+            {{profile?.firstName}} {{profile?.lastName}}
+          </a>
+        </li>
+        <li class="text-error"><a routerLink="/login" (click)="logout()">Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</div>

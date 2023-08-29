@@ -1,1 +1,29 @@
-/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import 'ngx-toastr/toastr';
+
+.toast-container .ngx-toastr {
+  all: unset;
+}
+
+.toast-container {
+  width: 200px;
+  margin-top: 20px;
+  margin-right: 20px;
+}
+
+.bg-success.ngx-toastr * {
+  color: hsl(var(--suc)/var(--tw-text-opacity));
+  background-color: hsl(var(--su));
+}
+
+.bg-warning.ngx-toastr * {
+  color: hsl(var(--suc)/var(--tw-text-opacity));
+  background-color: hsl(var(--wa));
+}
+
+.bg-error.ngx-toastr * {
+  color: hsl(var(--suc)/var(--tw-text-opacity));
+  background-color: hsl(var(--er));
+}

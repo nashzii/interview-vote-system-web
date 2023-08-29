@@ -1,0 +1,22 @@
+<div class="w-full h-screen flex justify-center items-center">
+  <div class="w-80 flex flex-col justify-center">
+    <h1 class="text-2xl text-center ont-semibold mb-6">
+      Sign in to your account
+    </h1>
+    <div class="form-control">
+      <label class="label">
+        <span class="label-text">Username</span>
+      </label>
+      <input type="text" class="input input-bordered w-full max-w-xs" [(ngModel)]="username" />
+      <!-- <label class="label">
+      <span class="label-text-alt">Bottom Left label</span>
+      <span class="label-text-alt">Bottom Right label</span>
+    </label> -->
+      <label class="label">
+        <span class="label-text">Password</span>
+      </label>
+      <input type="password" class="input input-bordered w-full max-w-xs" [(ngModel)]="password" />
+      <button class="btn btn-primary mt-10 w-full" (click)="login()">Sign in</button>
+    </div>
+  </div>
+</div>

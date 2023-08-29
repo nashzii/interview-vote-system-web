@@ -1,0 +1,157 @@
+<div class="flex justify-between items-center mb-10">
+  <div class="tabs tabs-boxed sm:ml-10">
+    <a
+      class="tab"
+      [ngClass]="{ 'tab-active': state.tabActive == 0 }"
+      (click)="state.tabActive = 0"
+      ><lucide-icon name="grid-2x2"></lucide-icon
+    ></a>
+    <a
+      class="tab"
+      [ngClass]="{ 'tab-active': state.tabActive == 1 }"
+      (click)="state.tabActive = 1"
+      ><lucide-icon name="bar-chart-horizontal"></lucide-icon
+    ></a>
+  </div>
+  <div
+    class="join sm:justify-end justify-center sm:pr-10"
+    *ngIf="state.tabActive === 0"
+  >
+    <input
+      class="input input-bordered join-item"
+      placeholder="search"
+      name="searchTerm"
+      [(ngModel)]="searchTerm"
+      (input)="searchVoteItem()"
+    />
+    <button class="btn join-item rounded-r-lg">
+      <lucide-icon name="search"></lucide-icon>
+    </button>
+  </div>
+</div>
+<div class="wrapper mx-5" *ngIf="state.tabActive === 0">
+  <div
+    class="inline-grid justify-center cursor-pointer"
+    *ngFor="let voteItem of voteItems.voteitem; let i = index"
+  >
+    <div
+      class="card card-size bg-base-100 shadow-xl"
+      (mouseover)="onMouseEnter(i)"
+      (mouseout)="onMouseLeave(i)"
+    >
+      <div class="card-body p-0">
+        <div class="custom-progress">
+          <div class="progress-bar bg-primary-content">
+            <div
+              class="progress-fill bg-primary opacity-75"
+              [ngStyle]="{ width: calProgress(voteItem.voteCount) + '%' }"
+            ></div>
+          </div>
+          <div class="progress-label text-neutral-focus">
+            <div class="flex w-100 justify-between">
+              <div
+                class="font-bold whitespace-nowrap w-56 overflow-hidden truncate"
+              >
+                {{ voteItem.name }}
+              </div>
+              <div>
+                {{ calProgress(voteItem.voteCount) }}%
+                <span class="text-xs">{{ voteItem.voteCount }} Vote</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="p-5">
+          {{ voteItem.description }}
+        </div>
+        <div *ngIf="showMenu[i]" class="absolute bottom-5 right-5">
+          <ul class="menu menu-horizontal bg-base-200 rounded-box">
+            <li>
+              <a
+                class="tooltip text-error"
+                data-tip="Delete"
+                (click)="openDeleteModal('Delete ' + voteItem.name, voteItem)"
+              >
+                <lucide-angular name="delete"></lucide-angular>
+              </a>
+            </li>
+            <li>
+              <a
+                class="tooltip text-warning"
+                data-tip="Edit"
+                (click)="openEditModal('Edit ' + voteItem.name, voteItem)"
+              >
+                <lucide-icon name="pencil"></lucide-icon>
+              </a>
+            </li>
+            <li>
+              <a
+                class="tooltip text-success"
+                data-tip="Vote"
+                (click)="userVote(voteItem.itemId)"
+              >
+                <i-lucide name="vote"></i-lucide>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="inline-grid justify-center cursor-pointer">
+    <div
+      class="card card-size bg-base-100 shadow-xl min-h-16"
+      (click)="openAddModal()"
+    >
+      <div class="card-body p-0">
+        <div class="flex justify-center items-center w-full h-full">
+          <lucide-angular size="100" name="plus-circle"></lucide-angular>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="state.tabActive == 1">
+  <div class="container-margin">
+    <canvas
+      baseChart
+      [data]="barChartData"
+      [options]="barChartOptions"
+      [plugins]="barChartPlugins"
+      [legend]="barChartLegend"
+      [type]="'bar'"
+      style="height: 350px"
+    >
+    </canvas>
+  </div>
+</div>
+
+<app-modal #addModal (onSubmit)="confirmAdd()">
+  <input
+    type="text"
+    placeholder="name"
+    name="formVoteAdd.name"
+    [(ngModel)]="formVoteAdd.name"
+    class="input w-full my-2"
+  />
+  <textarea
+    type="text"
+    placeholder="description"
+    name="formVoteAdd.description"
+    [(ngModel)]="formVoteAdd.description"
+    class="input w-full my-2 h-52"
+  ></textarea>
+</app-modal>
+
+<app-modal #editModal (onSubmit)="confirmEdit()">
+  <textarea
+    class="textarea textarea-bordered w-full h-52"
+    placeholder="description"
+    name="formVoteEdit.description"
+    [(ngModel)]="formVoteEdit.description"
+  ></textarea>
+</app-modal>
+
+<app-modal #deleteModal (onSubmit)="confirmDelete($event)">
+  <div>Do you want to delete ?</div>
+</app-modal>
