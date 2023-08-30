@@ -12,8 +12,9 @@ const routes: Routes = [
   {
     path: 'vote',
     component: VotingComponent,
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
   },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', redirectTo: '/' },
 ];
 

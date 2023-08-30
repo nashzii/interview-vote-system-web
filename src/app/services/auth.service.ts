@@ -18,7 +18,6 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   login(username: string, password: string): Observable<any> {
-    console.log(environment)
     return this.http
       .post<ILoginResponse>(this.endpoint + '/auth/login', {
         username,
